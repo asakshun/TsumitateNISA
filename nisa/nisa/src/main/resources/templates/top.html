@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--
+	Moon by GetTemplates.co
+	URL: https://gettemplates.co
+-->
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>TOP</title>
+    <!-- Bootstrap CSSのCDNリンク -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h1 class="visually-hidden">Headers examples</h1>
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+            <span class="sub">積立シミュレーション　</span>
+            <span class="fs-4 main">貯金額と積立額のバランスは？</span>
+        </a>
+    </header>
+</div>
+
+<!--    <div>-->
+<!--        <ul class="navbar-nav ml-auto">-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/signup}">新規会員登録</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/login}">ログイン</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+
+    <!-- 項目入力フォーム -->
+    <section id="gtco-single-content" class="bg-white">
+        <div class="container">
+            <div class="section-content blog-content">
+                <div class="row">
+                    <!-- Single Content Holder -->
+                    <form  th:action="@{/submit}" th:method="POST" th:object="${userInputForm}">
+                        <div class="row row-cols-2">
+                            <!--左側の各種フォーム-->
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <div class="row row-cols-2">
+                                    <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                        <label for="monthlyIncome" class="form-label" style="font-weight: bold;">月あたりの世帯収入は？</label>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('monthlyIncome')}" th:errors="*{monthlyIncome}"></div>
+                                        <input type="text" id = "monthlyIncome" th:field="*{monthlyIncome}" oninput="inputChange(event)" class="form-control" placeholder="例:300000"><br>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                        <label for="monthlyLivingCost" class="form-label" style="font-weight: bold;">1ヶ月の生活費は？</label>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('monthlyLivingCost')}" th:errors="*{monthlyLivingCost}"></div>
+                                        <input type="text"  id = "monthlyLivingCost" th:field="*{monthlyLivingCost}" oninput="inputChange(event)" class="form-control" placeholder="例:250000"><br>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                        <label for="totalMoney" class="form-label" style="font-weight: bold;">現在の貯金は？</label>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('totalMoney')}" th:errors="*{totalMoney}"></div>
+                                        <input type="text" id = "totalMoney" th:field="*{totalMoney}" oninput="inputChange(event)" class="form-control" placeholder="例:1000000"><br>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                        <label for="xMonthsForEmergencyFund" class="form-label" style="font-weight: bold;">生活防衛費は1か月の生活費の何か月分？</label>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('xMonthsForEmergencyFund')}" th:errors="*{xMonthsForEmergencyFund}"></div>
+                                        <input type="text" id = "xMonthsForEmergencyFund" th:field="*{xMonthsForEmergencyFund}" class="form-control" placeholder="例:3"><br>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                        <label for="currentSavingGoal" class="form-label" style="font-weight: bold;">生活防衛費除く現在の貯金目標額は？</label>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('currentSavingGoal')}" th:errors="*{currentSavingGoal}"></div>
+                                        <input type="text" id = "currentSavingGoal" th:field="*{currentSavingGoal}" oninput="inputChange(event)" class="form-control" placeholder="例:500000"><br>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-2">
+                                    <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                        <label for="savingDeadline" class="form-label" style="font-weight: bold;">その貯金目標額をあと何か月でためる？</label>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('savingDeadline')}" th:errors="*{savingDeadline}"></div>
+                                        <input type="text" id = "savingDeadline" th:field="*{savingDeadline}" class="form-control" placeholder="例:12"><br>
+                                    </div>
+                                </div>
+                                    <div class="row row-cols-2">
+                                        <div class="col-12 col-sm-6 col-md-6 d-flex align-items-center" style="height: 50px;">
+                                    <label for="bonus" class="form-label" style="font-weight: bold;">ためるまでに貯金できるボーナスの合計額は？</label>
+                                        </div>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <div class="text-danger" th:if="${#fields.hasErrors('bonus')}" th:errors="*{bonus}"></div>
+                                        <input type="text" id = "bonus" th:field="*{bonus}" oninput="inputChange(event)" class="form-control" placeholder="例:100000"><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 右側のボタン2つ -->
+                            <div class="col-12 col-sm-12 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                                <div class="col-12 col-sm-12 col-md-5 d-flex align-items-center justify-content-center" style="height: 50px;">
+                                    <input type="submit" id="balanceButton"  class="btn btn-outline-primary"  value="貯金額と積立額のバランスは？" style="width: 400px;">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-5 d-flex align-items-center justify-content-center" style="height: 50px;">
+                                    <input type="button" class="btn btn-outline-secondary" value="リセット" onclick="clearText()" style="width: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                        <!-- End of Contact Form Holder -->
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!--貯金額と積立額の表示-->
+    <div class="d-flex align-items-center justify-content-center mt-4" th:if="${showResult}">
+        <span class="fst-italic fs-4 main">月々いくら貯金と積立にまわせるか？</span>
+    </div>
+    <div class="container mt-4 mb-4" th:if="${showResult}" th:object="${resultForm}">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 2rem;">月の貯蓄額</h5>
+                        <p class="card-text" style="font-size: 3.5rem;" th:text="${resultForm.monthlySavingResultWithComma}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 2rem;">月の積立額</h5>
+                        <p class="card-text" style="font-size: 3.5rem;" th:text="${resultForm.monthlyResultWithComma}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4 col-12 col-sm-12 d-flex flex-column align-items-center justify-content-center" th:if="${showResult}">
+        <form th:action="@{/}" method="GET">
+            <input type="submit" class="btn btn-outline-secondary" th:action="@{/}" value="計算をやりなおす">
+        </form>
+    </div>
+
+
+
+    <!-- End of Contact Form Section -->
+    <footer class="mastfoot mb-3 bg-white py-4 border-top">
+    </footer>
+</div>
+
+</div>
+<!-- Bootstrap JSおよび依存関係のCDNリンク -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+
+    function clearText(){
+      document.querySelectorAll('input[type="text"]').forEach(text => {
+        text.value = "";
+        }
+      )
+    }
+
+        // 3桁ごとにコンマを追加する関数
+        function addCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        // 入力フィールドにフォーカスアウト時のイベントリスナーを追加
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('blur', function () {
+                let value = this.value.replace(/,/g, ''); // 現在のコンマを削除
+                if (!isNaN(value) && value !== '') {
+                    this.value = addCommas(value);
+                }
+                var regex = /^[0-9,]+$/;
+                if (!regex.test(value)) {
+                    this.value = ""
+                }
+            });
+        });
+
+<!--    // 「バランスは？」ボタンを押下したときにカンマを削除する-->
+<!--    document.addEventListener("DOMContentLoaded", function() {-->
+<!--        let button = document.getElementById("balanceButton")-->
+
+<!--        button.addEventListener("click", function(){-->
+<!--            document.querySelectorAll('input[type="text"]').forEach(input => {-->
+<!--                input.value = input.value.replace(/,/g, ''); // 現在のコンマを削除-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+
+  </script>
+</html>

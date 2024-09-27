@@ -1,0 +1,32 @@
+/*全体の背景色
+    .background-color {
+      background-color: #8DAB7F; /* 背景色を緑に設定
+      width: 100%;
+      height: auto; /* 高さを300ピクセルに設定 */
+    }
+
+/*title部のCSS*/
+    .title {
+        text-indent: 80px;
+        background-color: #ECF0C8; /* 背景色を淡い灰色に設定*/
+    }
+
+    .title .sub {
+        font-size: 14px;  /* フォントサイズを14ピクセルに設定 */
+        color: #888;      /* フォントカラーを灰色に設定 */
+        margin-bottom: 10px; /* 下部に10ピクセルのマージンを設定 */
+        text-align: center;
+    }
+
+    /* .mainクラスのスタイル */
+    .title .main {
+        font-size: 20px;  /* フォントサイズを20ピクセルに設定 */
+        color: #333;      /* フォントカラーを濃い灰色に設定 */
+        font-weight: bold; /* フォントウェイトをボールドに設定 */
+        text-align: center;
+    }
+
+/* bodyのフォントを変更 */
+    body {
+        font-family: 'Arial', sans-serif;
+    }

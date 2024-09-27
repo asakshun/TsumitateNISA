@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">-->
+  <link href="/css/style.min.css" rel="stylesheet" type="text/css">
+  <title>TOP</title>
+</head>
+<body>
+<div class="background-color">
+  <div class="title">
+    <h1>
+      <span class="sub">積立シミュレーション</span>
+      <span class="main">貯金と積立のバランスは？</span>
+    </h1>
+  </div>
+
+    <form  th:action="@{/submit}" th:method="POST" th:object="${userInputForm}">
+      月収                            <input type="text" id = "monthlyIncome" th:field="*{monthlyIncome}" oninput="inputChange(event)"><br>
+      1ヶ月の生活費                       <input type="text" id = "monthlyLivingCost" th:field="*{monthlyLivingCost}" oninput="inputChange(event)"><br>
+      現在の貯金                      <input type="text" id = "totalMoney" th:field="*{totalMoney}" oninput="inputChange(event)"><br>
+      生活防衛費     <input type="text" id = "xMonthsForEmergencyFund" th:field="*{xMonthsForEmergencyFund}"><br>
+      現在の貯金目標額は？（生活防衛費除く）  <input type="text" id = "currentSavingGoal" th:field="*{currentSavingGoal}" oninput="inputChange(event)"><br>
+      いつまでにためる？（単位は○ヶ月）      <input type="text" id = "savingDeadline" th:field="*{savingDeadline}"><br>
+      ためるまでのボーナス合計額は？         <input type="text" id = "bonus" th:field="*{bonus}" oninput="inputChange(event)"><br>
+      <input type="submit" >
+    </form>
+  <input type="button" value="リセット" onclick="clearText()"/>
+
+<br>
+
+<h2>
+  <div th:text="${result}"></div>
+</h2>
+
+
+<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>-->
+</div>
+</body>
+  <script>
+
+    function clearText(){
+      document.querySelectorAll('input[type="text"]').forEach(text => {
+        text.value = "";
+        }
+      )
+    }
+
+
+        // 3桁ごとにコンマを追加する関数
+        function addCommas(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        // 入力フィールドにフォーカスアウト時のイベントリスナーを追加
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('blur', function () {
+                let value = this.value.replace(/,/g, ''); // 現在のコンマを削除
+                if (!isNaN(value) && value !== '') {
+                    this.value = addCommas(value);
+                }
+            });
+        });
+
+  </script>
+</html>
